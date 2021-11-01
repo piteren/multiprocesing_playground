@@ -7,22 +7,23 @@ from ptools.mpython.omp_nb import OMPRunnerNB, RunningWorker, MultiprocParam
 
 
 def demo_nb(
-        multiproc: MultiprocParam=  72,
         ordered_results=            True,
-        num_loops=                  200):
+        num_loops=                  200,
+        sleep=                      0.1):
 
     # prepares task for given int
-    def get_task(ix: int): return {'name': f'task {ix}', 'array':np.random.random((100,100))}
+    def get_task(ix: int): return {'name': f'task {ix}'}
 
     # task worker
     class RWbreak(RunningWorker):
-        def process(self, name, array):
-           array = np.transpose(array)
-           return {'info':f'done {name}', 'array':array}
+        def process(self, name):
+            array = np.random.random((10000, 1000))
+            array = np.transpose(array)
+            sum = np.sum(array)
+            return {'info':f'done {name}', 'sum':sum}
 
     omp = OMPRunnerNB(
         rw_class=           RWbreak,
-        multiproc=          multiproc,
         ordered_results=    ordered_results,
         verb=               1)
 
@@ -39,12 +40,14 @@ def demo_nb(
             if loop_ix == num_loops: break
 
             n_tasks = 0
-            for _ in range(random.randint(1,10)):
+            for _ in range(random.randint(1,100)):
                 task = get_task(task_ix)
                 omp.process(task)
                 task_ix += 1
                 n_tasks += 1
             print(f' > sent {n_tasks} tasks')
+
+            time.sleep(sleep)
 
             n_results = 0
             while True:
