@@ -2,8 +2,7 @@ import numpy as np
 import random
 import time
 
-from ptools.lipytools.little_methods import prob
-from ptools.mpython.omp_nb import OMPRunnerNB, RunningWorker, MultiprocParam
+from pypaq.mpython.omp_nb import OMPRunnerNB, RunningWorker
 
 
 def demo_nb(

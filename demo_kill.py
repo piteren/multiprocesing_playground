@@ -1,6 +1,6 @@
 import time
 
-from ptools.mpython.mptools import ExSubprocess, Que
+from pypaq.mpython.mptools import ExSubprocess, Que
 
 
 def demo_kill():

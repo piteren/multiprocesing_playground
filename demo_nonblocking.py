@@ -1,8 +1,8 @@
 import random
 import time
 
-from ptools.lipytools.little_methods import prob
-from ptools.mpython.omp_nb import OMPRunnerNB, RunningWorker, MultiprocParam
+from pypaq.lipytools.little_methods import prob
+from pypaq.mpython.omp_nb import OMPRunnerNB, RunningWorker, MultiprocParam
 
 
 def demo_nb(
